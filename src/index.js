@@ -1,11 +1,13 @@
 const express = require('express');
 const { talkerRoute } = require('./routes/talkerRoute');
+const { loginRoute } = require('./routes/loginRoute');
 
 const app = express();
 
 app.use(express.json());
 
 app.use('/talker', talkerRoute);
+app.use('/login', loginRoute);
 
 // não remova esse endpoint, e para o avaliador funcionar
 const HTTP_OK_STATUS = 200;
