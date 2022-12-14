@@ -1,4 +1,4 @@
-const { promise: fs } = require('fs');
+const { promises: fs } = require('fs');
 const { join } = require('path');
 
 const PATH = join(__dirname, '..', 'talker.json');
