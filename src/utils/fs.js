@@ -15,7 +15,17 @@ const readFileTalker = async () => {
 
 const writeFileTalker = async (content) => {
   try {
-    const talkers = readFileTalker();
+    await fs.writeFile(PATH, JSON.stringify(content));
+    return true;
+  } catch (error) {
+    console.log(error.message);
+    return undefined;
+  }
+};
+
+const addNewTalker = async (content) => {
+  try {
+    const talkers = await readFileTalker();
     const newTalker = {
       id: talkers.length + 1,
       ...content,
@@ -24,15 +34,34 @@ const writeFileTalker = async (content) => {
       ...talkers,
       newTalker,
     ]; 
-    await fs.writeFile(PATH, JSON.stringify(updatedFile));
-    return JSON.parse(content);
+    return await writeFileTalker(updatedFile);
   } catch (error) {
     console.log(error.message);
     return undefined;
   }
 };
 
+const updateTalkerById = async (content, id) => {
+  try {
+    const talkers = await readFileTalker();
+    const updateTalker = talkers.map((talker) => {
+      if (talker.id === Number(id)) {
+        return {
+          id,
+          ...content,
+        };
+      }
+      return talker;
+    });
+    return await writeFileTalker(updateTalker);
+  } catch (error) {
+    console.log(error);
+    return undefined;
+  }
+};
+
 module.exports = {
   readFileTalker,
-  writeFileTalker,
+  addNewTalker,
+  updateTalkerById,
 };
