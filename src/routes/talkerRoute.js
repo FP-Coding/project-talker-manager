@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const manipulateTalkers = require('../utils/fs');
+const { tokenValidator } = require('../middlewares/validators/tokenValidator');
 
 const talkerRoute = Router();
 
@@ -16,7 +17,9 @@ talkerRoute.get('/:id', async (req, res) => {
   return res.status(200).json(talkerById);
 });
 
-talkerRoute.post('/', async (req, res) => {
+talkerRoute.post('/', 
+tokenValidator,
+  async (req, res) => {
   const content = req.body;
   const createdTalker = await manipulateTalkers.addNewTalker(content);
   return res.status(201).json(createdTalker);
