@@ -16,8 +16,10 @@ talkerRoute.get('/:id', async (req, res) => {
   return res.status(200).json(talkerById);
 });
 
-talkerRoute.put('/:id', (req, res) => {
-
+talkerRoute.post('/', async (req, res) => {
+  const content = req.body;
+  const createdTalker = await manipulateTalkers.addNewTalker(content);
+  return res.status(201).json(createdTalker);
 });
 
 module.exports = {

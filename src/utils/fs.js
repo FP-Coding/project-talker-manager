@@ -34,7 +34,8 @@ const addNewTalker = async (content) => {
       ...talkers,
       newTalker,
     ]; 
-    return await writeFileTalker(updatedFile);
+    await writeFileTalker(updatedFile);
+    return newTalker; 
   } catch (error) {
     console.log(error.message);
     return undefined;
@@ -45,15 +46,16 @@ const updateTalkerById = async (content, id) => {
   try {
     const talkers = await readFileTalker();
     const updateTalker = talkers.map((talker) => {
-      if (talker.id === Number(id)) {
+      if (talker.id === id) {
         return {
-          id,
+          ...talker,
           ...content,
         };
       }
       return talker;
     });
-    return await writeFileTalker(updateTalker);
+    await writeFileTalker(updateTalker);
+    return updateTalker.find(({ id: idTalker }) => idTalker === id);
   } catch (error) {
     console.log(error);
     return undefined;
