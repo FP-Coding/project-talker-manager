@@ -50,6 +50,12 @@ ratingValidator,
   return res.status(200).json(updatedTalker);
 });
 
+talkerRoute.delete('/:id', tokenValidator, async (req, res) => {
+  const { id } = req.params;
+  await manipulateTalkers.deleteTalkerById(Number(id));
+  res.status(204).end();
+});
+
 module.exports = {
   talkerRoute,
 };
