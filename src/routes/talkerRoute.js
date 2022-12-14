@@ -1,6 +1,12 @@
 const { Router } = require('express');
 const manipulateTalkers = require('../utils/fs');
 const { tokenValidator } = require('../middlewares/validators/tokenValidator');
+const { nameValidator } = require('../middlewares/validators/nameValidator');
+const { ageValidator } = require('../middlewares/validators/ageValidator');
+const { 
+  dateValidator, 
+  ratingValidator, 
+  talkValidator } = require('../middlewares/validators/talkValidator');
 
 const talkerRoute = Router();
 
@@ -19,6 +25,11 @@ talkerRoute.get('/:id', async (req, res) => {
 
 talkerRoute.post('/', 
 tokenValidator,
+nameValidator,
+ageValidator,
+talkValidator,
+dateValidator,
+ratingValidator,
   async (req, res) => {
   const content = req.body;
   const createdTalker = await manipulateTalkers.addNewTalker(content);
