@@ -6,7 +6,9 @@ const talkValidator = (req, res, next) => {
   if (!talk.watchedAt) { 
     return res.status(400).json({ message: 'O campo "watchedAt" é obrigatório' }); 
   }
-  if (!talk.rate) return res.status(400).json({ message: 'O campo "rate" é obrigatório' });  
+  if (!talk.rate && talk.rate !== 0) { 
+    return res.status(400).json({ message: 'O campo "rate" é obrigatório' }); 
+}  
 
   next();
 };
@@ -24,7 +26,7 @@ const dateValidator = (req, res, next) => {
 const ratingValidator = (req, res, next) => {
   const { talk } = req.body;
   const isANumberCorrect = [1, 2, 3, 4, 5];
-  if (!isANumberCorrect.includes(talk.rate)) { 
+  if (!isANumberCorrect.includes(talk.rate) || talk.rate < 1) { 
     return res.status(400).json({ message: 'O campo "rate" deve ser um inteiro de 1 à 5' }); 
   }
   next();

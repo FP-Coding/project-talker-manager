@@ -36,6 +36,20 @@ ratingValidator,
   return res.status(201).json(createdTalker);
 });
 
+talkerRoute.put('/:id',
+tokenValidator,
+nameValidator,
+ageValidator,
+talkValidator,
+dateValidator,
+ratingValidator,
+  async (req, res) => {
+  const { id } = req.params;
+  const content = req.body;
+  const updatedTalker = await manipulateTalkers.updateTalkerById(content, Number(id));
+  return res.status(200).json(updatedTalker);
+});
+
 module.exports = {
   talkerRoute,
 };
