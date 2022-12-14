@@ -66,7 +66,6 @@ const deleteTalkerById = async (id) => {
   try {
     const talkers = await readFileTalker();
     const talkersUpdated = talkers.filter(({ id: idTalker }) => idTalker !== id);
-    console.log(id);
     await writeFileTalker(talkersUpdated);
     return true;
   } catch (error) {
